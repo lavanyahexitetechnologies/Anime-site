@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalog — Animesh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark">Animesh</span>
+      <span class="sub">anime catalog</span>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="catalog.html" class="active">Catalog</a>
+      <a href="catalog.html">Genres</a>
+      <a href="index.html#journey">Start journey</a>
+    </nav>
+  </div>
+</header>
+
+<section class="catalog-head">
+  <div class="wrap">
+    <div class="eyebrow">002 — the shelf</div>
+    <h1>Full catalog</h1>
+    <p>Twelve panels, four moods. Tap a tag to narrow the shelf — hover a panel to see it in colour.</p>
+
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-chip is-active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="action">Action</button>
+      <button class="filter-chip" data-filter="fantasy">Fantasy</button>
+      <button class="filter-chip" data-filter="slice">Slice of Life</button>
+      <button class="filter-chip" data-filter="romance">Romance</button>
+      <button class="filter-chip" data-filter="mystery">Mystery</button>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="catalog-grid" id="catalogGrid">
+
+    <article class="koma-card" data-genre="action">
+      <div class="koma-art"><img src="images/naruto.jpg" alt="Naruto cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Action</span>
+      <div class="koma-body"><h3>Naruto</h3><div class="koma-meta"><span>220 EP</span><span class="rating">★ 8.4</span></div></div>
+    </article>
+
+    <article class="koma-card" data-genre="action">
+      <div class="koma-art"><img src="images/demon-slayer.jpg" alt="Demon Slayer cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Action</span>
+      <div class="koma-body"><h3>Demon Slayer</h3><div class="koma-meta"><span>44 EP</span><span class="rating">★ 8.7</span></div></div>
+    </article>
+
+    <article class="koma-card" data-genre="action">
+      <div class="koma-art"><img src="images/one-piece.jpg" alt="One Piece cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Action</span>
+      <div class="koma-body"><h3>One Piece</h3><div class="koma-meta"><span>1000+ EP</span><span class="rating">★ 8.9</span></div></div>
+    </article>
+
+    <article class="koma-card" data-genre="fantasy">
+      <div class="koma-art"><img src="images/attack-on-titan.jpg" alt="Attack on Titan cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Fantasy</span>
+      <div class="koma-body"><h3>Attack on Titan</h3><div class="koma-meta"><span>87 EP</span><span class="rating">★ 9.0</span></div></div>
+    </article>
+
+    <article class="koma-card" data-genre="fantasy">
+      <div class="koma-art"><img src="images/jujutsu-kaisen.jpg" alt="Jujutsu Kaisen cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Fantasy</span>
+      <div class="koma-body"><h3>Jujutsu Kaisen</h3><div class="koma-meta"><span>47 EP</span><span class="rating">★ 8.6</span></div></div>
+    </article>
+
+    <article class="koma-card" data-genre="action">
+      <div class="koma-art"><img src="images/my-hero-academia.jpg" alt="My Hero Academia cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Action</span>
+      <div class="koma-body"><h3>My Hero Academia</h3><div class="koma-meta"><span>159 EP</span><span class="rating">★ 8.0</span></div></div>
+    </article>
+
+    <article class="koma-card" data-genre="mystery">
+      <div class="koma-art"><img src="images/death-note.jpg" alt="Death Note cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Mystery</span>
+      <div class="koma-body"><h3>Death Note</h3><div class="koma-meta"><span>37 EP</span><span class="rating">★ 9.0</span></div></div>
+    </article>
+
+    <article class="koma-card" data-genre="slice">
+      <div class="koma-art"><img src="images/spy-x-family.jpg" alt="Spy x Family cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Slice of Life</span>
+      <div class="koma-body"><h3>Spy x Family</h3><div class="koma-meta"><span>25 EP</span><span class="rating">★ 8.5</span></div></div>
+    </article>
+
+    <article class="koma-card" data-genre="fantasy">
+      <div class="koma-art"><img src="images/fullmetal-alchemist.jpg" alt="Fullmetal Alchemist: Brotherhood cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Fantasy</span>
+      <div class="koma-body"><h3>Fullmetal Alchemist: Brotherhood</h3><div class="koma-meta"><span>64 EP</span><span class="rating">★ 9.1</span></div></div>
+    </article>
+
+    <article class="koma-card" data-genre="slice">
+      <div class="koma-art"><img src="images/violet-evergarden.jpg" alt="Violet Evergarden cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Slice of Life</span>
+      <div class="koma-body"><h3>Violet Evergarden</h3><div class="koma-meta"><span>13 EP</span><span class="rating">★ 8.6</span></div></div>
+    </article>
+
+    <article class="koma-card" data-genre="romance">
+      <div class="koma-art"><img src="images/your-lie-in-april.jpg" alt="Your Lie in April cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Romance</span>
+      <div class="koma-body"><h3>Your Lie in April</h3><div class="koma-meta"><span>22 EP</span><span class="rating">★ 8.6</span></div></div>
+    </article>
+
+    <article class="koma-card" data-genre="romance">
+      <div class="koma-art"><img src="images/toradora.jpg" alt="Toradora! cover art"><div class="halftone"></div></div>
+      <span class="koma-tag">Romance</span>
+      <div class="koma-body"><h3>Toradora!</h3><div class="koma-meta"><span>25 EP</span><span class="rating">★ 8.0</span></div></div>
+    </article>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span class="mark">Animesh</span>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="catalog.html">Catalog</a>
+    </nav>
+    <span class="meta">Animesh — Where Every Anime Story Comes to Life. ✨</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
