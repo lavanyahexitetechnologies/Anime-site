@@ -143,3 +143,139 @@
 <script src="script.js"></script>
 </body>
 </html>
+
+<script src="https://sdk.cashfree.com/js/v3/cashfree.prod.js"></script>
+<style>
+/* Payment Modal Styles */
+.payment-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.payment-overlay.active {
+  display: flex;
+}
+.payment-modal {
+  background: #0f172a;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+}
+.plan-card {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+.plan-card:hover, .plan-card.selected {
+  border-color: #f97316;
+  background: rgba(249,115,22,0.1);
+}
+.plan-card.popular {
+  border-color: #ec4899;
+}
+.plan-card h3 {
+  color: #fff;
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+.plan-price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+.plan-price::before {
+  content: '₹';
+  font-size: 1.25rem;
+  vertical-align: top;
+}
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  text-align: left;
+}
+.plan-features li {
+  color: #94a3b8;
+  padding: 6px 0;
+  font-size: 0.875rem;
+}
+.plan-features li::before {
+  content: '✓';
+  color: #22c55e;
+  margin-right: 8px;
+}
+.pay-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #f97316, #ec4899);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+.pay-btn:hover { opacity: 0.9; }
+.pay-btn:disabled {
+  background: #374151;
+  cursor: not-allowed;
+}
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 24px;
+  cursor: pointer;
+}
+.upgrade-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #f97316, #ec4899);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+.premium-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(251,191,36,0.1);
+  border: 1px solid rgba(251,191,36,0.3);
+  border-radius: 50px;
+  color: #fbbf24;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+</style>
+
