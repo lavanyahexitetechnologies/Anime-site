@@ -279,3 +279,224 @@
 }
 </style>
 
+<div id="animeModal" class="custom-modal">
+  <div class="custom-modal-content">
+    <span class="close-btn" id="closeAnimeModal">&times;</span>
+    <h2 id="animeTitle" style="color: #fff; margin-bottom: 10px; font-family: 'Shippori Mincho', serif;">Anime Title</h2>
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+      <button id="startWatchingBtn" class="watch-btn">▶ Start Watching</button>
+      <button id="addFavBtn" class="fav-btn">♥ Add to Favourite</button>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <h3 style="color: #fff; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">Episodes</h3>
+      <ul id="episodeList" style="list-style: none; padding: 0; max-height: 150px; overflow-y: auto; margin-top: 10px;">
+        </ul>
+    </div>
+
+    <button id="buyBtn" class="buy-btn" style="margin-top: 20px; width: 100%;">Buy Premium Plan ₹99</button>
+  </div>
+</div>
+
+<div id="paymentOverlay" class="payment-overlay">
+  <div class="payment-modal" style="position: relative;">
+    <button class="close-btn" id="closePaymentModal">&times;</button>
+    <h2 style="color: white; text-align: center; margin-bottom: 10px;">Choose Your Plan</h2>
+    <p style="color: #94a3b8; text-align: center; font-size: 0.9rem; margin-bottom: 20px;">Select a plan to initiate Cashfree Payment</p>
+    
+    <div class="plan-grid">
+      <div class="plan-card selected" data-price="99">
+        <h3>Monthly Fan</h3>
+        <div class="plan-price">99</div>
+        <ul class="plan-features">
+          <li>All Anime Access</li>
+          <li>HD Streaming</li>
+          <li>No Ads</li>
+        </ul>
+      </div>
+      <div class="plan-card popular" data-price="299">
+        <h3>Yearly Otaku</h3>
+        <div class="plan-price">299</div>
+        <ul class="plan-features">
+          <li>4K Ultra HD</li>
+          <li>Offline Downloads</li>
+          <li>Exclusive Events</li>
+        </ul>
+      </div>
+    </div>
+    <button id="proceedPayBtn" class="pay-btn">Proceed to Pay</button>
+  </div>
+</div>
+
+
+<style>
+/* மெயின் அனிமே மொடால் ஸ்டைல் */
+.custom-modal {
+  display: none; /* ஆரம்பத்தில் மறைந்திருக்கும் */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+}
+.custom-modal-content {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  margin: auto;
+  top: 15%;
+}
+.watch-btn {
+  background: #f97316;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fav-btn {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* எபிசோட் லிஸ்ட் ஸ்க்ரோல்பார் ஸ்டைல் */
+#episodeList::-webkit-scrollbar {
+  width: 6px;
+}
+#episodeList::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+}
+</style>
+
+
+<script>
+// 1. அனிமே எபிசோடுகள் டேட்டா
+const animeEpisodesData = {
+  "Naruto": ["Episode 1: Enter: Naruto Uzumaki!", "Episode 2: My Name is Konohamaru!", "Episode 3: Sasuke and Sakura!", "Episode 4: Survival Test"],
+  "Demon Slayer": ["Episode 1: Cruelty", "Episode 2: Trainer Sakonji Urokodaki", "Episode 3: Sabito and Makomo"],
+  "One Piece": ["Episode 1: I'm Luffy!", "Episode 2: Enter the Great Swordsman Zoro!"],
+  "default": ["Episode 1: The Journey Begins", "Episode 2: Hidden Power", "Episode 3: The Next Level"]
+};
+
+let userState = { hasPlan: false, favourites: [] };
+let selectedPrice = 99;
+
+// Cashfree SDK-வை இணைத்தல்
+const cashfree = Cashfree({ mode: "sandbox" });
+
+// DOM எலிமெண்ட்கள்
+const catalogGrid = document.getElementById('catalogGrid');
+const animeModal = document.getElementById('animeModal');
+const paymentOverlay = document.getElementById('paymentOverlay');
+
+// மொடால்களை மூடும் பங்க்ஷன்கள்
+document.getElementById('closeAnimeModal').onclick = () => { animeModal.style.display = 'none'; };
+document.getElementById('closePaymentModal').onclick = () => { paymentOverlay.style.display = 'none'; };
+
+// முக்கிய பகுதி: கார்டைக் கிளிக் செய்யும்போது நடப்பவை
+if (catalogGrid) {
+  catalogGrid.addEventListener('click', (e) => {
+    // பயனர் கார்டின் மீது எங்கு கிளிக் செய்தாலும் துல்லியமாக கார்டைக் கண்டுபிடிக்கும்
+    const card = e.target.closest('.koma-card');
+    if (!card) return;
+
+    e.preventDefault(); // பக்கத்தை ரீஃப்ரெஷ் ஆகாமல் தடுக்கும்
+
+    const animeName = card.querySelector('h3').innerText;
+    document.getElementById('animeTitle').innerText = animeName;
+
+    // எபிசோடுகளை உருவாக்குதல்
+    const episodeList = document.getElementById('episodeList');
+    episodeList.innerHTML = '';
+    const episodes = animeEpisodesData[animeName] || animeEpisodesData['default'];
+    
+    episodes.forEach(ep => {
+      const li = document.createElement('li');
+      li.innerText = ep;
+      li.style.padding = "8px 0";
+      li.style.borderBottom = "1px solid rgba(255,255,255,0.05)";
+      li.style.color = "#94a3b8";
+      episodeList.appendChild(li);
+    });
+
+    // மொடாலைத் திரையில் காட்டுதல் (flex அல்லது block மூலம்)
+    animeModal.style.display = 'block';
+  });
+}
+
+// "Buy Premium Plan ₹99" பட்டன் கிளிக் லாஜிக்
+document.getElementById('buyBtn').onclick = () => {
+  animeModal.style.display = 'none'; // அனிமே ஜன்னலை மூடு
+  paymentOverlay.style.display = 'flex'; // நேரடியாக Cashfree பிளான் பக்கத்தைக் காட்டு
+};
+
+// பிளான் தேர்வு செய்யும் வசதி
+document.querySelectorAll('.plan-card').forEach(card => {
+  card.onclick = () => {
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedPrice = card.getAttribute('data-price');
+  };
+});
+
+// Cashfree Integration மூலம் பணம் செலுத்துதல்
+document.getElementById('proceedPayBtn').onclick = async () => {
+  const proceedBtn = document.getElementById('proceedPayBtn');
+  proceedBtn.innerText = "Processing...";
+  proceedBtn.disabled = true;
+
+  try {
+    // உங்களுடைய Backend Order API-ஐ இங்கே அழைக்க வேண்டும்
+    const response = await fetch("https://your-backend-server.com/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: selectedPrice, currency: "INR" })
+    });
+
+    const orderData = await response.json();
+
+    if (orderData && orderData.payment_session_id) {
+      cashfree.checkout({
+        paymentSessionId: orderData.payment_session_id,
+        redirectTarget: "_self" 
+      });
+    } else {
+      alert(`Demo Mode: ₹${selectedPrice} பிளான் வெற்றிகரமாக வாங்கப்பட்டது! (Cashfree Backend Offline)`);
+      userState.hasPlan = true;
+      paymentOverlay.style.display = 'none';
+    }
+  } catch (error) {
+    alert(`Demo Mode: ₹${selectedPrice} பிளான் வெற்றிகரமாக வாங்கப்பட்டது!`);
+    userState.hasPlan = true;
+    paymentOverlay.style.display = 'none';
+  } finally {
+    proceedBtn.innerText = "Proceed to Pay";
+    proceedBtn.disabled = false;
+  }
+};
+
+// சும்மா "Start Watching" அழுத்தினால் நடப்பது
+document.getElementById('startWatchingBtn').onclick = () => {
+  if (!userState.hasPlan) {
+    animeModal.style.display = 'none';
+    paymentOverlay.style.display = 'flex';
+  } else {
+    alert("Streaming Starts Now! Enjoy!");
+  }
+};
+</script>
+
