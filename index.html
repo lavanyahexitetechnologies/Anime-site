@@ -231,4 +231,73 @@
     </button>
   </div>
 </div>
+
+            <!-- அனிமே விவரங்கள் காட்டும் புதிய Modal -->
+<div id="animeModal" class="anime-modal">
+  <div class="anime-modal-content">
+    <span class="close-btn" id="closeAnimeModal">&times;</span>
+    
+    <div class="modal-flex-container">
+      <h2 id="animeTitle">Anime Title</h2>
+      
+      <!-- ஆக்ஷன் பட்டன்கள் -->
+      <div class="modal-actions">
+        <button id="startWatchingBtn" class="watch-btn">▶ Start Watching</button>
+        <button id="addFavBtn" class="fav-btn">♥ Add to Favourite</button>
+      </div>
+
+      <!-- எபிசோடுகள் பட்டியல் -->
+      <div class="episode-section">
+        <h3>Episodes</h3>
+        <ul id="episodeList" class="episode-list">
+          <!-- ஜாவாஸ்கிரிப்ட் மூலம் எபிசோடுகள் இங்கே வரும் -->
+        </ul>
+      </div>
+
+      <button id="buyBtn" class="buy-btn" style="margin-top: 20px;">Buy Premium Plan ₹99</button>
+    </div>
+  </div>
+</div>
+
+<!-- லாகின் Modal -->
+<div id="loginModal" class="payment-overlay">
+  <div class="payment-modal" style="position: relative; max-width: 400px;">
+    <button class="close-btn" id="closeLoginModal">&times;</button>
+    <h2 style="color: white; margin-bottom: 20px; text-align: center;">Login to Animesh</h2>
+    <form id="loginForm" style="display: flex; direction: ltr; flex-direction: column; gap: 15px;">
+      <input type="email" placeholder="Email Address" required style="padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #1e293b; color: white;">
+      <input type="password" placeholder="Password" required style="padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #1e293b; color: white;">
+      <button type="submit" class="pay-btn">Login</button>
+    </form>
+  </div>
+</div>
+
+<!-- பிளான் வாங்கும் (Payment) Modal -->
+<div id="paymentOverlay" class="payment-overlay">
+  <div class="payment-modal" style="position: relative;">
+    <button class="close-btn" id="closePaymentModal">&times;</button>
+    <h2 style="color: white; text-align: center;">Choose Your Plan</h2>
+    <div class="plan-grid">
+      <div class="plan-card selected" data-price="99">
+        <h3>Monthly Fan</h3>
+        <div class="plan-price">99</div>
+        <ul class="plan-features">
+          <li>All Anime Access</li>
+          <li>HD Streaming</li>
+          <li>No Ads</li>
+        </ul>
+      </div>
+      <div class="plan-card popular" data-price="299">
+        <h3>Yearly Otaku</h3>
+        <div class="plan-price">299</div>
+        <ul class="plan-features">
+          <li>4K Ultra HD</li>
+          <li>Offline Downloads</li>
+          <li>Exclusive Merchandise</li>
+        </ul>
+      </div>
+    </div>
+    <button id="proceedPayBtn" class="pay-btn">Proceed to Pay</button>
+  </div>
+</div>
             
