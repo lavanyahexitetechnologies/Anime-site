@@ -53,3 +53,17 @@ document.querySelector(".close-btn").addEventListener("click", () => {
 document.getElementById("buyBtn").addEventListener("click", () => {
   alert("Cashfree Payment Integration Here");
 });
+
+const closeBtn = document.querySelector(".close-btn");
+if (closeBtn) {
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+}
+
+const buyBtn = document.getElementById("buyBtn");
+if (buyBtn) {
+  buyBtn.addEventListener("click", () => {
+    alert("Cashfree Payment Integration Here");
+  });
+}
