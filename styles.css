@@ -682,3 +682,39 @@ img, svg { display: block; max-width: 100%; }
   .genre-grid { grid-template-columns: repeat(2, 1fr); }
 }
 .halftone { display: none; }
+
+.anime-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.anime-modal-content{
+  background:#fff;
+  padding:30px;
+  border-radius:12px;
+  max-width:500px;
+  width:90%;
+  text-align:center;
+}
+
+.close-btn{
+  float:right;
+  font-size:28px;
+  cursor:pointer;
+}
+
+.buy-btn{
+  margin-top:20px;
+  padding:12px 24px;
+  border:none;
+  background:#ff5a5a;
+  color:#fff;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:16px;
+}
